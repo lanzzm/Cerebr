@@ -16,7 +16,7 @@
     fill: currentColor;
     opacity: 0.6;
     transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-                opacity 0.2s ease;
+        opacity 0.2s ease;
 }
 
 #settings-button:hover svg {
@@ -44,6 +44,7 @@
     transform-origin: bottom left;
     backdrop-filter: var(--cerebr-surface-backdrop-filter);
     -webkit-backdrop-filter: var(--cerebr-surface-backdrop-filter);
+    z-index: 20;
 }
 
 #settings-menu.visible {
@@ -113,11 +114,11 @@
     box-shadow: 0 1px 3px var(--cerebr-popup-shadow);
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: var(--cerebr-toggle-bg-on);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(16px);
 }
 

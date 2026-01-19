@@ -4,7 +4,7 @@
     overflow-y: scroll;
     padding: 15px;
     padding-top: calc(15px + env(safe-area-inset-top));
-    padding-bottom: calc(60px + env(safe-area-inset-bottom) + var(--chat-bottom-extra-padding, 0px));
+    padding-bottom: calc(110px + env(safe-area-inset-bottom) + var(--chat-bottom-extra-padding, 0px));
     scrollbar-width: none;
     -ms-overflow-style: none;
     min-height: 100%;

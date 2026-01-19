@@ -27,4 +27,3 @@ export function normalizeChatCompletionsUrl(value) {
         return withoutTrailingSlash;
     }
 }
-
