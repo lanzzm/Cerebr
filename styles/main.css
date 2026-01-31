@@ -1,6 +1,7 @@
 /* Base */
 @import './base/variables.css';
 @import './base/reset.css';
+@import './base/starfield.css';
 
 /* Utils */
 @import './utils/animations.css';

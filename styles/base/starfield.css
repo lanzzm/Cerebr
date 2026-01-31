@@ -1,0 +1,143 @@
+/* 星空背景效果 */
+.starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(to bottom,
+            #0a0a12 0%,
+            #0d1020 30%,
+            #121a2e 60%,
+            #1a1d23 100%);
+}
+
+/* 星星层 - 小星星 */
+.starfield .stars-small {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, white, transparent),
+        radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 160px 120px, white, transparent),
+        radial-gradient(1px 1px at 200px 50px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 220px 140px, white, transparent),
+        radial-gradient(1px 1px at 250px 90px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 280px 170px, white, transparent),
+        radial-gradient(1px 1px at 310px 30px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 340px 100px, white, transparent),
+        radial-gradient(1px 1px at 370px 60px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 400px 150px, white, transparent),
+        radial-gradient(1px 1px at 80px 200px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 120px 250px, white, transparent),
+        radial-gradient(1px 1px at 180px 220px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 240px 280px, white, transparent),
+        radial-gradient(1px 1px at 300px 240px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 360px 210px, white, transparent);
+    background-repeat: repeat;
+    background-size: 420px 300px;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+/* 星星层 - 中等星星 */
+.starfield .stars-medium {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(1.5px 1.5px at 100px 50px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 200px 150px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1.5px 1.5px at 300px 100px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 50px 200px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1.5px 1.5px at 350px 250px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 150px 300px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1.5px 1.5px at 250px 350px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 400px 180px, rgba(255, 255, 255, 0.7), transparent);
+    background-repeat: repeat;
+    background-size: 500px 400px;
+    animation: twinkle 6s ease-in-out infinite 1s;
+}
+
+/* 星星层 - 大星星 */
+.starfield .stars-large {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(2px 2px at 150px 100px, #fff, transparent),
+        radial-gradient(2px 2px at 350px 200px, rgba(200, 220, 255, 0.9), transparent),
+        radial-gradient(2.5px 2.5px at 50px 350px, rgba(255, 240, 200, 0.9), transparent),
+        radial-gradient(2px 2px at 450px 50px, #fff, transparent),
+        radial-gradient(2px 2px at 250px 400px, rgba(200, 200, 255, 0.8), transparent);
+    background-repeat: repeat;
+    background-size: 600px 500px;
+    animation: twinkle 8s ease-in-out infinite 2s;
+}
+
+/* 闪烁动画 */
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* 流星效果（可选） */
+.starfield .shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transform: rotate(-45deg);
+    animation: shooting 3s ease-in-out infinite;
+    opacity: 0;
+}
+
+.starfield .shooting-star:nth-child(4) {
+    top: 20%;
+    left: 30%;
+    animation-delay: 0s;
+}
+
+.starfield .shooting-star:nth-child(5) {
+    top: 40%;
+    left: 60%;
+    animation-delay: 1.5s;
+}
+
+@keyframes shooting {
+    0% {
+        transform: translateX(-100px) translateY(-100px) rotate(-45deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateX(200px) translateY(200px) rotate(-45deg);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
