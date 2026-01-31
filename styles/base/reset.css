@@ -40,3 +40,19 @@ body::before {
     pointer-events: none;
     z-index: 50;
 }
+
+/* 底部渐变遮罩 - 让内容从按钮上方平滑淡出 */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 48px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top,
+            var(--cerebr-bg-color) 0%,
+            var(--cerebr-bg-color) 40%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 50;
+}
