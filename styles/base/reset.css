@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
     height: 100vh;
+    height: 100dvh;
     height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
@@ -22,4 +23,20 @@ body {
 :focus-visible {
     outline: 2px solid var(--cerebr-focus-border-color);
     outline-offset: 2px;
+}
+
+/* 顶部渐变遮罩 - 让内容滚出时平滑淡出 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(to bottom,
+            var(--cerebr-bg-color) 0%,
+            var(--cerebr-bg-color) 30%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 50;
 }

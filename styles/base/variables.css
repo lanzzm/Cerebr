@@ -60,7 +60,7 @@
 /* 深色主题变量 */
 :root.dark-theme {
     color-scheme: dark;
-    --cerebr-bg-color: #262B33;
+    --cerebr-bg-color: #1a1d23;
     --cerebr-text-color: #d8dde6;
     --cerebr-text-color-secondary: rgba(255, 255, 255, 0.62);
     --cerebr-hover-bg-color: rgba(255, 255, 255, 0.08);
@@ -70,9 +70,9 @@
     --settings-bg-color: var(--cerebr-surface-bg);
     --settings-border-color: var(--cerebr-surface-border);
     --settings-hover-bg-color: var(--cerebr-message-user-bg);
-    --cerebr-message-user-bg: #3E4451;
-    --cerebr-message-ai-bg: #2c313c;
-    --cerebr-input-bg: #21252b;
+    --cerebr-message-user-bg: #2c3038;
+    --cerebr-message-ai-bg: #0f1115;
+    --cerebr-input-bg: #14171c;
     --cerebr-icon-color: #abb2bf;
     --cerebr-card-border-color: rgba(255, 255, 255, 0.1);
     --cerebr-highlight-border-color: rgba(0, 122, 255, 0.5);
@@ -114,7 +114,7 @@
 @media (prefers-color-scheme: dark) {
     :root:not(.light-theme) {
         color-scheme: dark;
-        --cerebr-bg-color: #262B33;
+        --cerebr-bg-color: #1a1d23;
         --cerebr-text-color: #d8dde6;
         --cerebr-text-color-secondary: rgba(255, 255, 255, 0.62);
         --cerebr-hover-bg-color: rgba(255, 255, 255, 0.08);
@@ -124,9 +124,9 @@
         --settings-bg-color: var(--cerebr-surface-bg);
         --settings-border-color: var(--cerebr-surface-border);
         --settings-hover-bg-color: var(--cerebr-message-user-bg);
-        --cerebr-message-user-bg: #3E4451;
-        --cerebr-message-ai-bg: #2c313c;
-        --cerebr-input-bg: #21252b;
+        --cerebr-message-user-bg: #2c3038;
+        --cerebr-message-ai-bg: #0f1115;
+        --cerebr-input-bg: #14171c;
         --cerebr-icon-color: #abb2bf;
         --cerebr-card-border-color: rgba(255, 255, 255, 0.1);
         --cerebr-highlight-border-color: rgba(0, 122, 255, 0.5);
