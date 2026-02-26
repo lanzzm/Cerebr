@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const chatListPage = document.getElementById('chat-list-page');
         const newChatButton = document.getElementById('new-chat');
         const summaryButton = document.getElementById('summary-button');
+        const imageButton = document.getElementById('image-button');
         const chatListButton = document.getElementById('chat-list');
         const apiSettings = document.getElementById('api-settings');
         const preferencesSettings = document.getElementById('preferences-settings');
@@ -196,6 +197,144 @@ document.addEventListener('DOMContentLoaded', async () => {
             messageInput.textContent = '总结页面';
             messageInput.dispatchEvent(new Event('input'));
             sendMessage();
+        });
+
+        // Image API config
+        let imageApiConfig = {
+            apiKey: '',
+            baseUrl: '',
+            modelName: 'gemini-2.0-flash-preview-image-generation'
+        };
+
+        const loadImageApiConfig = async () => {
+            const result = await syncStorageAdapter.get('imageApiConfig');
+            if (result.imageApiConfig) {
+                imageApiConfig = { ...imageApiConfig, ...result.imageApiConfig };
+            }
+            const apiKeyInput = document.getElementById('image-api-key');
+            const baseUrlInput = document.getElementById('image-base-url');
+            const modelNameInput = document.getElementById('image-model-name');
+            if (apiKeyInput) apiKeyInput.value = imageApiConfig.apiKey || '';
+            if (baseUrlInput) baseUrlInput.value = imageApiConfig.baseUrl || '';
+            if (modelNameInput) modelNameInput.value = imageApiConfig.modelName || '';
+        };
+
+        const saveImageApiConfig = async () => {
+            await syncStorageAdapter.set({ imageApiConfig });
+        };
+
+        // 生成图片按钮点击事件
+        imageButton?.addEventListener('click', async () => {
+            // Check config
+            if (!imageApiConfig.apiKey || !imageApiConfig.baseUrl) {
+                showToast(t('error_image_api_not_configured'), { type: 'error', durationMs: 3000 });
+                return;
+            }
+
+            // Get last AI message
+            const currentChat = chatManager.getCurrentChat();
+            const lastAiMessage = [...(currentChat?.messages || [])]
+                .reverse()
+                .find(msg => msg.role === 'assistant');
+
+            if (!lastAiMessage) {
+                showToast(t('error_no_ai_message'), { type: 'error', durationMs: 2200 });
+                return;
+            }
+
+            const content = typeof lastAiMessage.content === 'string'
+                ? lastAiMessage.content
+                : lastAiMessage.content.filter(p => p.type === 'text').map(p => p.text).join('\n');
+
+            if (!content.trim()) {
+                showToast(t('error_no_ai_message'), { type: 'error', durationMs: 2200 });
+                return;
+            }
+
+            // Generate image
+            imageButton.disabled = true;
+            showToast(t('toast_generating_image'), { type: 'info', durationMs: 2000 });
+
+            try {
+                const { generateImage } = await import('./services/image-generation.js');
+                const { base64Data } = await generateImage({ content, imageApiConfig });
+
+                // Create image message element and add to chat
+                const imageMessageDiv = document.createElement('div');
+                imageMessageDiv.className = 'message ai-message generated-image-message';
+
+                const mainContent = document.createElement('div');
+                mainContent.className = 'main-content';
+
+                const imgWrapper = document.createElement('div');
+                imgWrapper.className = 'generated-image-wrapper';
+
+                const img = document.createElement('img');
+                img.src = base64Data;
+                img.alt = t('label_generated_image');
+                img.className = 'generated-image';
+                img.style.cssText = 'max-width: 100%; border-radius: 8px; cursor: pointer;';
+
+                // Click to preview in new window (bypass iframe limitation)
+                img.addEventListener('click', () => {
+                    // Open image in a new popup window for full-size preview
+                    const width = Math.min(screen.width * 0.9, 1200);
+                    const height = Math.min(screen.height * 0.9, 900);
+                    const left = (screen.width - width) / 2;
+                    const top = (screen.height - height) / 2;
+
+                    const popup = window.open('', '_blank', `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+                    if (popup) {
+                        popup.document.write(`
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <title>${t('label_generated_image')}</title>
+                                <style>
+                                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                                    body {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        min-height: 100vh;
+                                        background: #1a1a1a;
+                                        padding: 20px;
+                                    }
+                                    img {
+                                        max-width: 100%;
+                                        max-height: calc(100vh - 40px);
+                                        object-fit: contain;
+                                        border-radius: 8px;
+                                        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <img src="${base64Data}" alt="${t('label_generated_image')}">
+                            </body>
+                            </html>
+                        `);
+                        popup.document.close();
+                    } else {
+                        // Fallback to sidebar preview if popup blocked
+                        showImagePreview({ base64Data, config: uiConfig.imagePreview });
+                    }
+                });
+
+                imgWrapper.appendChild(img);
+                mainContent.appendChild(imgWrapper);
+                imageMessageDiv.appendChild(mainContent);
+                chatContainer.appendChild(imageMessageDiv);
+
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                showToast(t('toast_image_generated'), { type: 'success', durationMs: 2000 });
+            } catch (error) {
+                showToast(t('error_image_generation_failed', [error.message]), { type: 'error', durationMs: 3000 });
+            } finally {
+                imageButton.disabled = false;
+            }
         });
 
         chatContainer.addEventListener('click', (e) => {
@@ -1157,6 +1296,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
+        // Image API settings page handlers
+        const imageApiSettings = document.getElementById('image-api-settings');
+        const imageApiSettingsToggle = document.getElementById('image-api-settings-toggle');
+
+        imageApiSettingsToggle?.addEventListener('click', () => {
+            imageApiSettings?.classList?.add('visible');
+            settingsMenu?.classList?.remove('visible');
+        });
+
+        imageApiSettings?.querySelector('.back-button')?.addEventListener('click', () => {
+            imageApiSettings?.classList?.remove('visible');
+        });
+
+        // Save image API config on input change
+        ['image-api-key', 'image-base-url', 'image-model-name'].forEach(id => {
+            document.getElementById(id)?.addEventListener('change', () => {
+                imageApiConfig.apiKey = document.getElementById('image-api-key')?.value || '';
+                imageApiConfig.baseUrl = document.getElementById('image-base-url')?.value || '';
+                imageApiConfig.modelName = document.getElementById('image-model-name')?.value || '';
+                saveImageApiConfig();
+            });
+        });
+
+        // Load image API config on init
+        await loadImageApiConfig();
+
         const SYSTEM_PROMPT_SYNC_THRESHOLD_BYTES = 6000;
         const SYSTEM_PROMPT_KEY_PREFIX = 'apiConfigSystemPrompt_';
         const SYSTEM_PROMPT_LOCAL_ONLY_KEY_PREFIX = 'apiConfigSystemPromptLocalOnly_';
@@ -1649,6 +1814,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (apiSettings?.classList?.contains('visible')) {
                 apiSettings.classList.remove('visible');
+                handled = true;
+            }
+
+            if (imageApiSettings?.classList?.contains('visible')) {
+                imageApiSettings.classList.remove('visible');
                 handled = true;
             }
 

@@ -118,5 +118,23 @@
   "error_read_image_failed": { "message": "Failed to read image" },
   "error_parse_image_failed": { "message": "Failed to parse image" },
   "error_not_image_file": { "message": "Not an image file" },
-  "error_image_too_large": { "message": "Image is too large. Please compress or crop it before sending." }
+  "error_image_too_large": { "message": "Image is too large. Please compress or crop it before sending." },
+
+  "quick_image": { "message": "Generate image" },
+  "settings_image_api": { "message": "Image API" },
+  "title_image_api_settings": { "message": "Image API settings" },
+  "image_api_key_label": { "message": "API Key" },
+  "image_api_key_placeholder": { "message": "Enter image API key" },
+  "image_base_url_label": { "message": "Base URL" },
+  "image_base_url_placeholder": { "message": "Enter Base URL" },
+  "image_model_name_label": { "message": "Model Name" },
+  "image_model_name_placeholder": { "message": "Enter model name" },
+  "error_image_api_config_incomplete": { "message": "Image API config is incomplete" },
+  "error_image_api_not_configured": { "message": "Please configure Image API first" },
+  "error_no_ai_message": { "message": "No AI response available" },
+  "error_image_generation_no_image": { "message": "API did not return an image" },
+  "error_image_generation_failed": { "message": "Image generation failed: $1" },
+  "toast_generating_image": { "message": "Generating image..." },
+  "toast_image_generated": { "message": "Image generated successfully" },
+  "label_generated_image": { "message": "Generated image" }
 }

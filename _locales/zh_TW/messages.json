@@ -118,5 +118,23 @@
   "error_read_image_failed": { "message": "讀取圖片失敗" },
   "error_parse_image_failed": { "message": "解析圖片失敗" },
   "error_not_image_file": { "message": "不是圖片檔案" },
-  "error_image_too_large": { "message": "圖片過大，建議壓縮或裁剪後再傳送" }
+  "error_image_too_large": { "message": "圖片過大，建議壓縮或裁剪後再傳送" },
+
+  "quick_image": { "message": "產生圖片" },
+  "settings_image_api": { "message": "圖片 API" },
+  "title_image_api_settings": { "message": "圖片 API 設定" },
+  "image_api_key_label": { "message": "API Key" },
+  "image_api_key_placeholder": { "message": "輸入圖片 API Key" },
+  "image_base_url_label": { "message": "Base URL" },
+  "image_base_url_placeholder": { "message": "輸入 Base URL" },
+  "image_model_name_label": { "message": "Model Name" },
+  "image_model_name_placeholder": { "message": "輸入模型名稱" },
+  "error_image_api_config_incomplete": { "message": "圖片 API 設定不完整" },
+  "error_image_api_not_configured": { "message": "請先設定圖片 API" },
+  "error_no_ai_message": { "message": "沒有可用的 AI 回覆" },
+  "error_image_generation_no_image": { "message": "API 未回傳圖片" },
+  "error_image_generation_failed": { "message": "產生圖片失敗: $1" },
+  "toast_generating_image": { "message": "正在產生圖片..." },
+  "toast_image_generated": { "message": "圖片產生成功" },
+  "label_generated_image": { "message": "產生的圖片" }
 }

@@ -169,3 +169,28 @@
     border-color: var(--cerebr-highlight-border-color);
     box-shadow: 0 0 0 1px var(--cerebr-highlight-border-color);
 }
+
+/* Image API settings page */
+#image-api-settings {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+    flex-direction: column;
+    background: var(--cerebr-bg-color);
+}
+
+#image-api-settings.visible {
+    display: flex;
+}
+
+.image-api-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
